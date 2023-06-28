@@ -28,7 +28,6 @@ function App() {
 
     return data ? 
     (
-        <>
         <table className="table-auto border-collapse border border-slate-400">
         <thead className="flex">
         <tr className="text-3xl">
@@ -47,7 +46,6 @@ function App() {
             ))}
         </tbody>
     </table>
-    </>
     ) : <button onClick={getData}>Get data</button>;
 }
 
