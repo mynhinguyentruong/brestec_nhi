@@ -1,7 +1,6 @@
 import { useState } from "react";
 import GladiatorService from "./services/gladiatorService.js";
 
-
 function App() {
     const [data, setData] = useState(null)
   
@@ -21,6 +20,7 @@ function App() {
 
     return data ? 
     (
+        <>
         <table className="table-auto border-collapse border border-slate-400">
         <thead className="flex">
         <tr className="text-3xl">
@@ -39,7 +39,7 @@ function App() {
             ))}
         </tbody>
     </table>
-        
+    </>
     ) : <button onClick={getData}>Get data</button>;
 }
 
