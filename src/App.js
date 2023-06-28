@@ -34,7 +34,7 @@ function App() {
             {/* Ideally should have a unique key for mapping but in this case we only render info to UI without method to modify so array index key is sufficient*/}
             {valuesOnlyArray.map((el, elIndex) => (
                 <tr key={elIndex}>
-                    {el.map((val, valIndex) => <td key={valIndex}>{val}</td>)}
+                    {el.map((val, valIndex) => <td className="text-bold" key={valIndex}>{val}</td>)}
                 </tr>
             ))}
         </tbody>
