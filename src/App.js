@@ -1,47 +1,46 @@
-import './App.css';
+import { useState } from "react";
 import GladiatorService from "./services/gladiatorService.js";
 
 
-
 function App() {
+    const [data, setData] = useState(null)
+  
+    const valuesOnlyArray = data && data.map(obj => {
+        return Object.values(obj)
+    })
 
-  const s = GladiatorService.get
-  const a = s()
-  console.log(a);
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1 className='text-3xl font-bold underline'>Hello</h1>
-      <table class="table-auto">
-  <thead>
-    <tr>
-      <th>Song</th>
-      <th>Artist</th>
-      <th>Year</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-      <td>Malcolm Lockyer</td>
-      <td>1961</td>
-    </tr>
-    <tr>
-      <td>Witchy Woman</td>
-      <td>The Eagles</td>
-      <td>1972</td>
-    </tr>
-    <tr>
-      <td>Shining Star</td>
-      <td>Earth, Wind, and Fire</td>
-      <td>1975</td>
-    </tr>
-  </tbody>
-</table>
-      
-      </header>
-    </div>
-  );
+    async function getData() {
+        try {
+            let parsedData = await (GladiatorService.get)()
+            setData(parsedData)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+
+    return data ? 
+    (
+        <table className="table-auto border-collapse border border-slate-400">
+        <thead className="flex">
+        <tr className="text-3xl">
+            <th>Gladiator name</th>
+            <th>Real name</th>
+            <th>First year</th>
+            <th >Last year</th>
+        </tr>
+        </thead>
+        <tbody>
+            {/* Ideally should have a unique key for mapping but in this case we only render info to UI without method to modify so array index key is sufficient*/}
+            {valuesOnlyArray.map((el, elIndex) => (
+                <tr key={elIndex}>
+                    {el.map((val, valIndex) => <td key={valIndex}>{val}</td>)}
+                </tr>
+            ))}
+        </tbody>
+    </table>
+        
+    ) : <button onClick={getData}>Get data</button>;
 }
 
 export default App;
