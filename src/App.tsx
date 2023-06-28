@@ -1,8 +1,15 @@
 import { useState } from "react";
 import GladiatorService from "./services/gladiatorService.js";
 
+type Gladiator = {
+    gladiator_name: string;
+    real_name: string;
+    first_year: number;
+    last_year: number
+}
+
 function App() {
-    const [data, setData] = useState(null)
+    const [data, setData] = useState<null| Gladiator[]>(null)
   
     const valuesOnlyArray = data && data.map(obj => {
         return Object.values(obj)
@@ -11,6 +18,7 @@ function App() {
     async function getData() {
         try {
             let parsedData = await (GladiatorService.get)()
+            console.log(parsedData)
             setData(parsedData)
         } catch (err) {
             console.log(err)
@@ -32,7 +40,7 @@ function App() {
         </thead>
         <tbody>
             {/* Ideally should have a unique key for mapping but in this case we only render info to UI without method to modify so array index key is sufficient*/}
-            {valuesOnlyArray.map((el, elIndex) => (
+            {valuesOnlyArray?.map((el, elIndex) => (
                 <tr key={elIndex}>
                     {el.map((val, valIndex) => <td className="text-bold" key={valIndex}>{val}</td>)}
                 </tr>
